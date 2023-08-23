@@ -11,6 +11,7 @@ export class TasksInMemoryRepository implements TasksRepository {
     const id = this.nextId++;
     const newTasks = { ...taskDetails, id, done: false };
     this.tasks.push(newTasks);
+
     return Promise.resolve(newTasks);
   }
 
@@ -20,13 +21,21 @@ export class TasksInMemoryRepository implements TasksRepository {
 
   delete(taskId: number): Promise<void> {
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
+
     return Promise.resolve();
   }
 
-  done(taskId: number): Promise<void> {
-    this.tasks = this.tasks.map((task) =>
-      task.id === taskId ? { ...task, done: true } : task,
-    );
-    return Promise.resolve();
+  done(taskId: number): Promise<boolean> {
+    let updated = false;
+    this.tasks = this.tasks.map((task) => {
+      if (task.id === taskId) {
+        updated = true;
+        return { ...task, done: true };
+      } else {
+        return task;
+      }
+    });
+
+    return Promise.resolve(updated);
   }
 }

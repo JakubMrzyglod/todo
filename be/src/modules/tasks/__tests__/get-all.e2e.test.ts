@@ -3,8 +3,9 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../../../app.module';
 import { TasksRepository } from '../repositories';
+import { createTask } from '../../../test-commons';
 
-describe('TasksController - (POST) /tasks', () => {
+describe('TasksController - (GET) /tasks', () => {
   let app: INestApplication;
   let tasksRepository: TasksRepository;
 
@@ -23,12 +24,11 @@ describe('TasksController - (POST) /tasks', () => {
   });
 
   it('should return empty array for not items', async () => {
-    const taskContent = 'Test content';
-    await tasksRepository.create({ content: taskContent });
+    const task = await createTask(tasksRepository);
     return request(app.getHttpServer())
       .get('/tasks')
       .expect(200)
-      .expect([{ id: 1, content: taskContent, done: false }]);
+      .expect([task]);
   });
 
   afterAll(async () => {
