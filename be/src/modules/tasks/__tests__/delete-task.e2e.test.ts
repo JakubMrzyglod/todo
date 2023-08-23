@@ -5,7 +5,7 @@ import { AppModule } from '../../../app.module';
 import { TasksRepository } from '../repositories';
 import { createTask } from '../../../test-commons';
 
-describe('TasksController - (PATCH) /tasks/:taskId', () => {
+describe('TasksController - (DELETE) /tasks/:taskId', () => {
   let app: INestApplication;
   let tasksRepository: TasksRepository;
 
@@ -19,26 +19,32 @@ describe('TasksController - (PATCH) /tasks/:taskId', () => {
     await app.init();
   });
 
-  it('should mark as done', async () => {
-    const { id: taskId } = await createTask(tasksRepository);
+  it('should delete task', async () => {
+    const createTasksPromises = new Array(3)
+      .fill(null)
+      .map(() => createTask(tasksRepository));
+    const [, { id: taskToDeleteId }] = await Promise.all(createTasksPromises);
     await request(app.getHttpServer())
-      .patch(`/tasks/${taskId}`)
+      .delete(`/tasks/${taskToDeleteId}`)
       .expect(200)
       .expect({});
 
     const updatedTask = await tasksRepository['tasks'].find(
-      (task) => task.id === taskId,
+      (task) => task.id === taskToDeleteId,
     );
 
-    expect(updatedTask?.done).toBe(true);
+    expect(updatedTask).toBeUndefined();
   });
 
   it('should throw error for invalid taskId', () => {
-    return request(app.getHttpServer()).patch(`/tasks/123`).expect(404).expect({
-      message: 'Not found task with id [123]',
-      error: 'Not Found',
-      statusCode: 404,
-    });
+    return request(app.getHttpServer())
+      .delete(`/tasks/123`)
+      .expect(404)
+      .expect({
+        message: 'Not found task with id [123]',
+        error: 'Not Found',
+        statusCode: 404,
+      });
   });
 
   afterAll(async () => {

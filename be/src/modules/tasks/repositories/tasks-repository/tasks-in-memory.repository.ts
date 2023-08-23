@@ -19,10 +19,13 @@ export class TasksInMemoryRepository implements TasksRepository {
     return Promise.resolve(this.tasks);
   }
 
-  delete(taskId: number): Promise<void> {
+  delete(taskId: number): Promise<boolean> {
+    const preDeletionTasksLength = this.tasks.length;
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    const postDeletionTasksLength = this.tasks.length;
+    const deleted = preDeletionTasksLength !== postDeletionTasksLength;
 
-    return Promise.resolve();
+    return Promise.resolve(deleted);
   }
 
   done(taskId: number): Promise<boolean> {

@@ -22,7 +22,11 @@ export class TasksService {
     }
   }
 
-  remove(taskId: number) {
-    return this.tasksRepository.delete(taskId);
+  async remove(taskId: number) {
+    const deleted = await this.tasksRepository.delete(taskId);
+
+    if (!deleted) {
+      throw new NotFoundException(`Not found task with id [${taskId}]`);
+    }
   }
 }
