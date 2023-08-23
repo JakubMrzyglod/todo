@@ -13,7 +13,7 @@ export class TasksInMemoryRepository implements TasksRepository {
     return Promise.resolve(newTasks);
   }
   getAll(): Promise<ITask[]> {
-    throw new Error('Method not implemented.');
+    return Promise.resolve(this.tasks);
   }
   delete(taskId: number): Promise<void> {
     throw new Error('Method not implemented.');
