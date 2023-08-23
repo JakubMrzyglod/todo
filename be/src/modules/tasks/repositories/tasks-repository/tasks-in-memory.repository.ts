@@ -13,14 +13,20 @@ export class TasksInMemoryRepository implements TasksRepository {
     this.tasks.push(newTasks);
     return Promise.resolve(newTasks);
   }
+
   getAll(): Promise<ITask[]> {
     return Promise.resolve(this.tasks);
   }
+
   delete(taskId: number): Promise<void> {
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
     return Promise.resolve();
   }
+
   done(taskId: number): Promise<void> {
-    throw new Error('Method not implemented.');
+    this.tasks = this.tasks.map((task) =>
+      task.id === taskId ? { ...task, done: true } : task,
+    );
+    return Promise.resolve();
   }
 }
