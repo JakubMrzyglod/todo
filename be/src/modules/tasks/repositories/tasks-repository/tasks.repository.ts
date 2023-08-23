@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ICreateTask, ITask } from '../../interfacas';
+import { ICreateTask, ITask } from '../../interfaces';
 
 @Injectable()
 export abstract class TasksRepository {
