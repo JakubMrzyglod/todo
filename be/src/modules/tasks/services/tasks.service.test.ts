@@ -1,13 +1,15 @@
-import { Test } from '@nestjs/testing';
-import { TasksService } from './tasks.service';
+import { NotFoundException } from '@nestjs/common';
 import { TasksRepository } from '../repositories';
+import { TasksService } from './tasks.service';
+import { Test, TestingModule } from '@nestjs/testing';
 
 describe('TasksService', () => {
   let tasksService: TasksService;
   let tasksRepository: TasksRepository;
+  let moduleRef: TestingModule;
 
   beforeEach(async () => {
-    const moduleRef = await Test.createTestingModule({
+    moduleRef = await Test.createTestingModule({
       providers: [
         TasksService,
         {
@@ -27,46 +29,82 @@ describe('TasksService', () => {
   });
 
   describe('create', () => {
-    it('should call the create method of tasks repository with the provided task object', () => {
-      const createTaskDto = {
-        content: 'Test Description',
-      };
+    it('should call tasksRepository.create with the provided dto', () => {
+      const createTaskDto = { content: 'Task description' };
 
-      tasksService.create(createTaskDto);
+      tasksRepository.create = jest
+        .fn()
+        .mockReturnValue({ id: 1, ...createTaskDto });
 
-      expect(tasksRepository.create).toHaveBeenCalledWith(createTaskDto);
+      const result = tasksService.create(createTaskDto);
+
+      expect(result).toEqual({ id: 1, ...createTaskDto });
+      expect(tasksRepository.create).toBeCalledWith(createTaskDto);
     });
   });
 
   describe('findAll', () => {
-    it('should return the result of getAll method of tasks repository', () => {
-      const tasks = [{ id: 1, content: 'Test Description' }];
-
-      (tasksRepository.getAll as jest.Mock).mockReturnValue(tasks);
+    it('should call tasksRepository.getAll', () => {
+      tasksRepository.getAll = jest.fn().mockReturnValue([
+        { id: 1, content: 'Task 1' },
+        { id: 2, content: 'Task 2' },
+      ]);
 
       const result = tasksService.findAll();
 
-      expect(result).toEqual(tasks);
+      expect(result).toEqual([
+        { id: 1, content: 'Task 1' },
+        { id: 2, content: 'Task 2' },
+      ]);
+      expect(tasksRepository.getAll).toBeCalled();
     });
   });
 
   describe('markAsDone', () => {
-    it('should call the done method of tasks repository with the provided taskId', () => {
+    it('should call tasksRepository.done with the provided taskId', async () => {
       const taskId = 1;
 
-      tasksService.markAsDone(taskId);
+      tasksRepository.done = jest.fn().mockReturnValue(true);
 
-      expect(tasksRepository.done).toHaveBeenCalledWith(taskId);
+      await tasksService.markAsDone(taskId);
+
+      expect(tasksRepository.done).toBeCalledWith(taskId);
+    });
+
+    it('should throw NotFoundException if tasksRepository.done returns false', async () => {
+      const taskId = 1;
+
+      tasksRepository.done = jest.fn().mockReturnValue(false);
+
+      await expect(tasksService.markAsDone(taskId)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
   describe('remove', () => {
-    it('should call the delete method of tasks repository with the provided taskId', () => {
+    it('should call tasksRepository.delete with the provided taskId', async () => {
       const taskId = 1;
 
-      tasksService.remove(taskId);
+      tasksRepository.delete = jest.fn().mockReturnValue(true);
 
-      expect(tasksRepository.delete).toHaveBeenCalledWith(taskId);
+      await tasksService.remove(taskId);
+
+      expect(tasksRepository.delete).toBeCalledWith(taskId);
     });
+
+    it('should throw NotFoundException if tasksRepository.delete returns false', async () => {
+      const taskId = 1;
+
+      tasksRepository.delete = jest.fn().mockReturnValue(false);
+
+      await expect(tasksService.remove(taskId)).rejects.toThrow(
+        NotFoundException,
+      );
+    });
+  });
+
+  afterAll(async () => {
+    await moduleRef.close();
   });
 });
