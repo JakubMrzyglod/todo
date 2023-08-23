@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { TasksRepository } from './repositories';
+import { CreateTaskDto } from '../dto/create-task.dto';
+import { TasksRepository } from '../repositories';
 
 @Injectable()
 export class TasksService {

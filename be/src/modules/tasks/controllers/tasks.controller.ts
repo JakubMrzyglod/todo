@@ -8,8 +8,8 @@ import {
   Delete,
   ParseIntPipe,
 } from '@nestjs/common';
-import { TasksService } from './tasks.service';
-import { CreateTaskDto } from './dto';
+import { TasksService } from '../services/tasks.service';
+import { CreateTaskDto } from '../dto';
 
 @Controller('tasks')
 export class TasksController {
