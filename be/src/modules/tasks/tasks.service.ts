@@ -7,22 +7,18 @@ export class TasksService {
   constructor(private readonly tasksRepository: TasksRepository) {}
 
   create(createTaskDto: CreateTaskDto) {
-    return 'This action adds a new task';
+    return this.tasksRepository.create(createTaskDto);
   }
 
   findAll() {
-    return `This action returns all tasks`;
+    return this.tasksRepository.getAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} task`;
+  markAsDone(taskId: number) {
+    return this.tasksRepository.done(taskId);
   }
 
-  markAsDone(id: number) {
-    return `This action updates a #${id} task`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} task`;
+  remove(taskId: number) {
+    return this.tasksRepository.delete(taskId);
   }
 }
