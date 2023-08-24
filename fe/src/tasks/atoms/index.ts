@@ -1,4 +1,5 @@
 export * from './background';
+export * from './button';
 export * from './card';
 export * from './content';
-export * from './input-label';
+export * from './plus-icon';
