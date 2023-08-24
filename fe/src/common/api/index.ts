@@ -1,2 +1,2 @@
-export * from './api-action';
+export * from './api-details';
 export * from './use-api';

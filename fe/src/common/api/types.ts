@@ -5,8 +5,11 @@ export type UseApiProps<T> = {
   onError?: (err: AxiosError) => void;
 };
 
-export type UseApi<P extends Params> = [Call<P>, boolean];
+export type UseApi<D = undefined> = [(data?: D) => Promise<void>, boolean];
 
-export type Call<P extends Params> = (props: { params?: P }) => Promise<void>;
+export enum HttpMethod {
+  DELETE = 'delete',
+  POST = 'post',
+}
 
-export type Params = (string | number)[];
+export type ApiDetails = [path: string, httpMethod: HttpMethod];

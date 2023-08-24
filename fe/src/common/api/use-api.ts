@@ -1,27 +1,20 @@
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 
-import { ApiAction, ApiActionDetails } from './api-action';
-import { Call, Params, UseApi, UseApiProps } from './types';
+import { ApiDetails, UseApi, UseApiProps } from './types';
 
-export const useApi = <P extends Params, Res>(
-  action: ApiAction,
-  props: UseApiProps<Res> = {},
-): UseApi<P> => {
-  const { onSuccess, onError } = props;
-  const [getPath, method] = ApiActionDetails[action];
+export const useApi = <Req, Res>(
+  [path, method]: ApiDetails,
+  props?: UseApiProps<Res>,
+): UseApi<Req> => {
+  const { onSuccess, onError } = props ?? {};
   const [loading, setLoading] = useState(false);
   const baseURL = 'http://localhost:3000';
 
-  const call: Call<P> = async ({ params }) => {
-    const path =
-      typeof getPath === 'string'
-        ? getPath
-        : getPath(params as unknown as string | number);
+  const call = async (data?: Req) => {
     setLoading(true);
-
     try {
-      const res = await axios[method](baseURL + path);
+      const res = await axios[method]<Res>(baseURL + path, data);
       onSuccess?.(res.data);
     } catch (err) {
       onError?.(err as AxiosError);
