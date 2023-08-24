@@ -1,8 +1,10 @@
-import { Button, PlusIcon } from 'tasks/atoms';
+import { AddTaskButtonContainer, Button, PlusIcon } from 'tasks/atoms';
 
 export const AddTaskButton = () => (
-  <Button>
-    <PlusIcon />
-    Add Task
-  </Button>
+  <AddTaskButtonContainer>
+    <Button>
+      <PlusIcon />
+      Add Task
+    </Button>
+  </AddTaskButtonContainer>
 );

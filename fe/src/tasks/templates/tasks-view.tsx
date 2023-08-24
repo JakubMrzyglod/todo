@@ -1,11 +1,11 @@
 import { Background, Card, Content } from '../atoms';
-import { AddTaskForm, TasksTable } from '../organisms';
+import { AddTask, TasksTable } from '../organisms';
 
 export const TasksView = () => (
   <Background>
     <Content>
       <Card>
-        <AddTaskForm />
+        <AddTask />
         <TasksTable />
       </Card>
     </Content>
