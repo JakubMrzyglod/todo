@@ -1,6 +1,7 @@
 import { FCC } from '@common-types';
+import { HTMLProps } from 'react';
 
-export const ActionButton: FCC = (props) => (
+export const ActionButton: FCC<HTMLProps<HTMLButtonElement>> = (props) => (
   <button
     {...{
       ...props,
