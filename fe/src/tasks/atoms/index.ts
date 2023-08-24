@@ -6,3 +6,5 @@ export * from './button';
 export * from './card';
 export * from './content';
 export * from './plus-icon';
+export * from './table-head-col';
+export * from './table-head-container';
