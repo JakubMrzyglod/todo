@@ -10,6 +10,7 @@ export type UseApi<D = undefined> = [(data?: D) => Promise<void>, boolean];
 export enum HttpMethod {
   DELETE = 'delete',
   POST = 'post',
+  PATCH = 'patch',
 }
 
 export type ApiDetails = [path: string, httpMethod: HttpMethod];

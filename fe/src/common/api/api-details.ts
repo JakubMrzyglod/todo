@@ -3,4 +3,5 @@ import { ApiDetails, HttpMethod } from './types';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getApiDetails: Record<string, (...args: any[]) => ApiDetails> = {
   deleteTask: (taskId: number) => [`/tasks/${taskId}`, HttpMethod.DELETE],
+  doneTask: (taskId: number) => [`/tasks/${taskId}`, HttpMethod.PATCH],
 };
