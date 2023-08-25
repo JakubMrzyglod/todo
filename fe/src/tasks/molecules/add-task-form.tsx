@@ -1,9 +1,8 @@
 import { FCC } from '@common-types';
 import { Form } from '@components';
-import { AddTaskFormContainer } from 'tasks/atoms/add-task-form-container';
 
-export const AddTaskForm: FCC = ({ children }) => (
-  <AddTaskFormContainer>
+export const AddTaskForm: FCC = ({ children }) => {
+  return (
     <Form
       {...{
         className: 'flex items-center',
@@ -11,5 +10,5 @@ export const AddTaskForm: FCC = ({ children }) => (
         children,
       }}
     />
-  </AddTaskFormContainer>
-);
+  );
+};

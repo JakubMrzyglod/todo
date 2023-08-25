@@ -1,7 +1,6 @@
 export * from './action-button';
 export * from './add-task-button-container';
 export * from './add-task-container';
-export * from './add-task-container';
 export * from './background';
 export * from './bin-icon';
 export * from './button';
