@@ -11,4 +11,5 @@ export * from './table-col';
 export * from './table-container';
 export * from './table-head-col';
 export * from './table-head-container';
+export * from './table-no-content-container';
 export * from './table-row.container';
