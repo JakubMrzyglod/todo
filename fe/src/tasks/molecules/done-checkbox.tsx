@@ -2,26 +2,25 @@ import { Checkbox } from '@components';
 import { getApiDetails, useApi } from 'common/api';
 import { FC, useState } from 'react';
 
-export const DoneCheckBox: FC<DoneCheckBoxProps> = ({ done, id }) => {
-  const [disabled, setDisabled] = useState(done);
-  const [checked, setChecked] = useState(done);
+export const DoneCheckBox: FC<DoneCheckBoxProps> = ({ isDone: checked, id, doTask }) => {
+  const [disabled, setDisabled] = useState(checked);
   const useApiProps = {
     onError: () => setDisabled(false),
-    onSuccess: () => setChecked(true),
+    onSuccess: () => doTask(),
   };
   const apiDetails = getApiDetails.doneTask(id);
   const [call] = useApi(apiDetails, useApiProps);
 
-  const onClick = () => {
+  const onChange = () => {
     setDisabled(true);
     call();
   };
-  const onChange = () => {};
 
-  return <Checkbox {...{ disabled, onClick, checked, onChange }} />;
+  return <Checkbox {...{ disabled, checked, onChange }} />;
 };
 
 type DoneCheckBoxProps = {
-  done: boolean;
+  isDone: boolean;
   id: number;
+  doTask: () => void;
 };
