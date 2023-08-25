@@ -16,7 +16,9 @@ export const TasksProvider: FCC<TasksProviderProps> = ({
     setTasks((tasks) => tasks?.filter((tasks) => tasks.id !== id));
   };
 
-  const value = { tasks, dropItem };
+  const addItem = (task: Task) => setTasks((tasks) => [...(tasks ?? []), task]);
+
+  const value = { tasks, dropItem, addItem };
 
   return <Provider {...{ value }}>{children}</Provider>;
 };
@@ -30,4 +32,5 @@ type TasksProviderProps = {
 type TasksContextType = {
   tasks: Task[] | undefined;
   dropItem: (id: number) => void;
+  addItem: (task: Task) => void;
 };

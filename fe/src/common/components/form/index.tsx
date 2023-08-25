@@ -1,18 +1,19 @@
 import { FCC } from '@common-types';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider } from 'react-hook-form';
 
 import { FormProps } from './types';
 
-export const Form: FCC<FormProps> = ({ children, onSubmit, className }) => {
-  const methods = useForm();
+export const Form: FCC<FormProps> = ({ children, onSubmit, disabled, methods }) => {
   const formProps = {
     onSubmit: methods.handleSubmit(onSubmit),
-    className,
+    className: 'flex items-center',
   };
 
   return (
     <FormProvider {...methods}>
-      <form {...formProps}>{children}</form>
+      <form {...formProps}>
+        <fieldset {...{ disabled, className: 'w-full' }}>{children}</fieldset>
+      </form>
     </FormProvider>
   );
 };

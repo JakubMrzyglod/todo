@@ -1,4 +1,7 @@
+import { UseFormReturn } from 'react-hook-form';
+
 export type FormProps<T = unknown> = {
   onSubmit: (data: T) => void;
-  className?: string;
+  methods: UseFormReturn;
+  disabled?: boolean;
 };

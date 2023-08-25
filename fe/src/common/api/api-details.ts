@@ -4,4 +4,5 @@ import { ApiDetails, HttpMethod } from './types';
 export const getApiDetails: Record<string, (...args: any[]) => ApiDetails> = {
   deleteTask: (taskId: number) => [`/tasks/${taskId}`, HttpMethod.DELETE],
   doneTask: (taskId: number) => [`/tasks/${taskId}`, HttpMethod.PATCH],
+  addTask: () => [`/tasks`, HttpMethod.POST],
 };
