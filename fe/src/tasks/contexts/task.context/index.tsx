@@ -1,6 +1,6 @@
 import { FCC } from '@common-types';
 import { createContext, useContext, useState } from 'react';
-import { Task } from 'tasks/types';
+import { Task } from '@tasks/types';
 
 export const TasksContext = createContext<TasksContextType>({} as TasksContextType);
 

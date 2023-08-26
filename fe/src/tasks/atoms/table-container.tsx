@@ -1,5 +1,5 @@
 import { FCC } from '@common-types';
-import { TableNoContent } from 'tasks/molecules';
+import { TableNoContent } from '@tasks/molecules';
 
 export const TableContainer: FCC = ({ children }) => (
   <div {...{ className: 'overflow-x-auto' }}>

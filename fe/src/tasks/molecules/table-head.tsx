@@ -1,5 +1,5 @@
+import { TableHeadCol, TableHeadContainer } from '@tasks/atoms';
 import { FC } from 'react';
-import { TableHeadCol, TableHeadContainer } from 'tasks/atoms';
 
 export const TableHead: FC = () => (
   <TableHeadContainer>

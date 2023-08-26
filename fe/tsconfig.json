@@ -5,8 +5,6 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -16,10 +14,11 @@
     "baseUrl": "./src",
     "paths": {
       "@components": ["./common/components"],
-      "@common-types": ["./common/types"]
+      "@common-types": ["./common/types"],
+      "@api": ["./common/api"],
+      "@tasks/*": ["./tasks/*"]
     },
-
-    /* Linting */
+    "types": ["node", "jest", "@testing-library/jest-dom"],
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,

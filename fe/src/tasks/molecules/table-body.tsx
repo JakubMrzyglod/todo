@@ -1,5 +1,5 @@
+import { useTasksContext } from '@tasks/contexts';
 import { FC } from 'react';
-import { useTasksContext } from 'tasks/contexts';
 
 import { TableRow } from '.';
 

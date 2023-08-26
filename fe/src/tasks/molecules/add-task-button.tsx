@@ -1,4 +1,4 @@
-import { AddTaskButtonContainer, Button, PlusIcon } from 'tasks/atoms';
+import { AddTaskButtonContainer, Button, PlusIcon } from '@tasks/atoms';
 
 export const AddTaskButton = () => (
   <AddTaskButtonContainer>

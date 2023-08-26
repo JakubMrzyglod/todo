@@ -1,6 +1,6 @@
+import { TableCol, TableRowContainer } from '@tasks/atoms';
+import { Task } from '@tasks/types';
 import { FC, useState } from 'react';
-import { TableCol, TableRowContainer } from 'tasks/atoms';
-import { Task } from 'tasks/types';
 
 import { RemoveButton } from '.';
 import { DoneCheckBox } from './done-checkbox';

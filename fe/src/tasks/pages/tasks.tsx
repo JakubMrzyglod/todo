@@ -1,6 +1,6 @@
-import { TasksProvider } from 'tasks/contexts';
-import { TasksView } from 'tasks/templates/tasks-view';
-import { Task } from 'tasks/types';
+import { TasksProvider } from '@tasks/contexts';
+import { TasksView } from '@tasks/templates/tasks-view';
+import { Task } from '@tasks/types';
 
 export const Tasks = () => {
   const tasks: Task[] = [];

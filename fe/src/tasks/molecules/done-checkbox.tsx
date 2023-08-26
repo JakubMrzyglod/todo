@@ -1,5 +1,5 @@
+import { getApiDetails, useApi } from '@api';
 import { Checkbox } from '@components';
-import { getApiDetails, useApi } from 'common/api';
 import { FC, useState } from 'react';
 
 export const DoneCheckBox: FC<DoneCheckBoxProps> = ({ isDone: checked, id, doTask }) => {

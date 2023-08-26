@@ -1,7 +1,8 @@
-import { getApiDetails, useApi } from '@api';
+import { getApiDetails } from '@api';
 import { ActionButton, BinIcon } from '@tasks/atoms';
 import { useTasksContext } from '@tasks/contexts';
 import { FC } from 'react';
+import { RemoveButtonProps } from './remove-button';
 
 export const RemoveButton: FC<RemoveButtonProps> = ({ id }) => {
   const { dropItem } = useTasksContext();
@@ -16,8 +17,4 @@ export const RemoveButton: FC<RemoveButtonProps> = ({ id }) => {
       <BinIcon />
     </ActionButton>
   );
-};
-
-type RemoveButtonProps = {
-  id: number;
 };
