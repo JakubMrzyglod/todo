@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { ApiDetails, UseApi, UseApiProps } from './types';
 
@@ -17,7 +18,10 @@ export const useApi = <Req, Res>(
       const res = await axios[method]<Res>(baseURL + path, data);
       onSuccess?.(res.data);
     } catch (err) {
-      onError?.(err as AxiosError);
+      const axiosError = err as AxiosError;
+      console.log({ axiosError });
+      onError?.(axiosError);
+      showError(axiosError);
     } finally {
       setLoading(false);
     }
@@ -25,3 +29,16 @@ export const useApi = <Req, Res>(
 
   return [call, loading];
 };
+
+const showError = (err: AxiosError) => {
+  const status = err.response?.status ?? 0;
+  const errorMessage = errorMessageMap[status] ?? DEFAULT_ERROR_MESSAGE;
+  toast.error(errorMessage);
+};
+
+const errorMessageMap: Record<number, string> = {
+  404: 'Item not found',
+  400: 'Invalid request data',
+};
+
+const DEFAULT_ERROR_MESSAGE = 'Opss! Something went wrong';
