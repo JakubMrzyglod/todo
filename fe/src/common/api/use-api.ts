@@ -11,8 +11,6 @@ export const useApi = <Req, Res>(
   const [loading, setLoading] = useState(false);
   const baseURL = 'http://localhost:3000';
 
-  console.log({ onSuccess });
-
   const call = async (data?: Req) => {
     setLoading(true);
     try {
