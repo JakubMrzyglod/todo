@@ -1,72 +1,81 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { Task } from '@tasks/types';
 
 import { TasksProvider, useTasksContext } from '.';
 
-describe('dropItem', () => {
-  test('should remove a task from the tasks list', () => {
-    const TestComponent = () => {
-      const { tasks, dropItem } = useTasksContext();
-      return (
-        <div>
-          {tasks?.map((task) => (
-            <div key={task.id} data-testid={`task-${task.id}`}>
-              {task.content}
-              <button onClick={() => dropItem(task.id)}>Delete</button>
-            </div>
-          ))}
-        </div>
-      );
-    };
+describe('TasksProvider', () => {
+  const task = { id: 1, content: 'New Task', done: false };
 
-    const tasks = [
-      { id: 1, content: 'Task 1', done: false },
-      { id: 2, content: 'Task 2', done: false },
-      { id: 3, content: 'Task 3', done: false },
-    ];
+  const TasksContextConsumer = () => {
+    const { tasks, addTask, doneTask, dropTask } = useTasksContext();
+    return (
+      <div>
+        <div data-testid="tasks-context">Tasks: {JSON.stringify(tasks)}</div>
+        <button data-testid="add-task-button" onClick={() => addTask(task)}>
+          Add Task
+        </button>
+        <button data-testid="done-task-button" onClick={() => doneTask(1)}>
+          Done Task
+        </button>
+        <button data-testid="drop-task-button" onClick={() => dropTask(1)}>
+          Done Task
+        </button>
+      </div>
+    );
+  };
 
+  it('should render the tasks context with the correct default value', () => {
     render(
-      <TasksProvider tasks={tasks}>
-        <TestComponent />
+      <TasksProvider>
+        <TasksContextConsumer />
       </TasksProvider>,
     );
 
-    const [deleteButton] = screen.getAllByText('Delete');
-    fireEvent.click(deleteButton);
-
-    expect(screen.queryByTestId('task-1')).toBeNull();
+    expect(screen.getByTestId('tasks-context')).toHaveTextContent('Tasks:');
   });
-});
 
-describe('addItem', () => {
-  test('should remove a task from the tasks list', () => {
-    const TestComponent = () => {
-      const { tasks, addItem } = useTasksContext();
-      return (
-        <>
-          <button onClick={() => addItem(newTask)}>Add Item</button>
-          {tasks?.map((task) => (
-            <div key={task.id} data-testid={`task-${task.id}`}>
-              {task.content}
-            </div>
-          ))}
-        </>
-      );
-    };
-
-    const newTask = { id: 1, content: 'Test content', done: false };
-
-    const tasks: Task[] = [];
-
+  it('should add a task when addTask is called', () => {
     render(
-      <TasksProvider tasks={tasks}>
-        <TestComponent />
+      <TasksProvider>
+        <TasksContextConsumer />
       </TasksProvider>,
     );
 
-    const addItemButton = screen.getByText('Add Item');
-    fireEvent.click(addItemButton);
+    const addTaskButton = screen.getByTestId('add-task-button');
 
-    expect(screen.queryByTestId('task-1')).not.toBeNull();
+    fireEvent.click(addTaskButton);
+
+    expect(screen.getByTestId('tasks-context')).toHaveTextContent(
+      'Tasks: [{"id":1,"content":"New Task","done":false}]',
+    );
+  });
+
+  it('should drop a task when dropTask is called', () => {
+    render(
+      <TasksProvider {...{ tasks: [task] }}>
+        <TasksContextConsumer />
+      </TasksProvider>,
+    );
+
+    const addTaskButton = screen.getByTestId('drop-task-button');
+
+    fireEvent.click(addTaskButton);
+
+    expect(screen.getByTestId('tasks-context')).toHaveTextContent('Tasks: []');
+  });
+
+  it('should done a task when doneTask is called', () => {
+    render(
+      <TasksProvider {...{ tasks: [task] }}>
+        <TasksContextConsumer />
+      </TasksProvider>,
+    );
+
+    const addTaskButton = screen.getByTestId('done-task-button');
+
+    fireEvent.click(addTaskButton);
+
+    expect(screen.getByTestId('tasks-context')).toHaveTextContent(
+      'Tasks: [{"id":1,"content":"New Task","done":true}]',
+    );
   });
 });

@@ -1,6 +1,6 @@
 import { FCC } from '@common-types';
 
-export const TableCol: FCC<TableColProps> = ({ children, isDone }) => (
+export const TableCol: FCC<TableColProps> = ({ children, done }) => (
   <th
     {...{
       children,
@@ -12,11 +12,11 @@ export const TableCol: FCC<TableColProps> = ({ children, isDone }) => (
       text-gray-900
       whitespace-nowrap
       dark:text-white
-      ${isDone ? 'line-through' : ''}`,
+      ${done ? 'line-through' : ''}`,
     }}
   />
 );
 
 type TableColProps = {
-  isDone?: boolean;
+  done?: boolean;
 };

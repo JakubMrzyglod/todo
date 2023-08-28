@@ -19,7 +19,7 @@ export const useApi = <Req, Res>(
       onSuccess?.(res.data);
     } catch (err) {
       const axiosError = err as AxiosError;
-      console.log({ axiosError });
+      console.log({ err });
       onError?.(axiosError);
       showError(axiosError);
     } finally {

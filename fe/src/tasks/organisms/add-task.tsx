@@ -1,13 +1,24 @@
+import { getApiDetails, useApi } from '@api';
 import { Form } from '@components';
 import { AddTaskContainer } from '@tasks/atoms';
 import { useTasksContext } from '@tasks/contexts';
 import { AddTaskButton, ContentInput } from '@tasks/molecules';
+import { Task } from '@tasks/types';
 import { useForm } from 'react-hook-form';
 
 export const AddTask = () => {
   const methods = useForm();
-  const { getAddItem } = useTasksContext();
-  const [onSubmit, disabled] = getAddItem(methods.reset);
+  const { addTask } = useTasksContext();
+
+  const useApiProps = {
+    onSuccess: (task: Task) => {
+      addTask(task);
+      methods.reset();
+    },
+  };
+  const apiDetails = getApiDetails.addTask();
+
+  const [onSubmit, disabled] = useApi(apiDetails, useApiProps);
 
   return (
     <Form {...{ disabled, onSubmit, methods }}>
