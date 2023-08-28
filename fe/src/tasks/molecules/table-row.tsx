@@ -6,14 +6,12 @@ import { RemoveButton } from '.';
 import { DoneCheckBox } from './done-checkbox';
 
 export const TableRow: FC<Task> = ({ content, done, id }) => {
-  const [isDone, setIsDone] = useState(done);
-  const doTask = () => setIsDone(true);
   return (
     <TableRowContainer>
       <TableCol>
-        <DoneCheckBox {...{ isDone, id, doTask }} />
+        <DoneCheckBox {...{ id, done }} />
       </TableCol>
-      <TableCol {...{ isDone }}>{content}</TableCol>
+      <TableCol {...{ done }}>{content}</TableCol>
       <TableCol>
         <RemoveButton {...{ id }} />
       </TableCol>
